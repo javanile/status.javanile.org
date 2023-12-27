@@ -31,6 +31,10 @@
         term.write(text)
     }
 
+    const error = (text) => {
+        return '\x1B[31m' + text + '\x1B[0m';
+    }
+
     const status = () => {
         fetch(url, {
             method: 'POST',
@@ -43,7 +47,7 @@
                 response.text().then(text => print(text)).catch(() => print(response))
             } else {
                 print(
-                    'RESPONSE ERROR' + eol + eol +
+                    error('RESPONSE ERROR') + eol + eol +
                     '    URL: ' + response.url + eol +
                     ' STATUS: ' + response.status
                 );
@@ -54,7 +58,7 @@
     }
 
     status();
-    setInterval(() => status(), 5000);
+    setInterval(() => status(), 50000);
 </script>
 </body>
 </html>
