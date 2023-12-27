@@ -19,46 +19,42 @@
 <body>
 <div id="terminal"></div>
 <script>
+    const url = "test1"
     const term = new Terminal();
+    const controller = new AbortController();
+    const eol = "\r\n";
 
     term.open(document.getElementById('terminal'));
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ \n')
 
+    const print = (text) => {
+        term.reset();
+        term.write(text)
+    }
+
+    const status = () => {
+        fetch(url, {
+            method: 'POST',
+            timeout: 8000,
+            mode: 'no-cors',
+            signal: controller.signal
+        }).then((response) => {
+            console.log(response);
+            if (response.ok) {
+                response.text().then(text => print(text)).catch(() => print(response))
+            } else {
+                print(
+                    'RESPONSE ERROR' + eol + eol +
+                    '    URL: ' + response.url + eol +
+                    ' STATUS: ' + response.status
+                );
+            }
+        }).catch((error) => {
+            print(error);
+        });
+    }
+
+    status();
+    setInterval(() => status(), 5000);
 </script>
 </body>
 </html>
