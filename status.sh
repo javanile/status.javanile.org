@@ -13,9 +13,11 @@ cache() {
 response() {
     echo "HTTP/1.1 200 OK"
     echo "Access-Control-Allow-Origin: *"
-    echo
+    echo ""
 
-    echo " 192.168.144.10 . . . [OK]"
+    echo ""
+    echo " 192.168.144.10 (intel5) . . . [OK]"
+    echo "   -> docker . . . . . . . . . [OK]"
 
     #cache 5 ls -la
 }
